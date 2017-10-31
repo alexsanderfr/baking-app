@@ -10,14 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.bakingapp.databinding.FragmentRecipeStepsBinding;
 import com.example.bakingapp.utilities.JsonUtils;
 
 import org.json.JSONException;
 
-public class RecipeStepsFragment extends Fragment implements RecipeStepsAdapter.RecipeStepsAdapterOnClickHandler {
+public class RecipeStepsFragment extends Fragment{
 
     FragmentRecipeStepsBinding binding;
     RecyclerView.LayoutManager layoutManager;
@@ -44,13 +43,9 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepsAdapter.
             e.printStackTrace();
         }
 
-        RecipeStepsAdapter recipeStepsAdapter = new RecipeStepsAdapter(data, this);
+        RecipeStepsAdapter recipeStepsAdapter = new RecipeStepsAdapter(data,
+                (RecipeStepsAdapter.RecipeStepsAdapterOnClickHandler) getActivity());
         binding.recipeStepsRv.setAdapter(recipeStepsAdapter);
         return binding.getRoot();
-    }
-
-    @Override
-    public void onClick(String stepId) {
-        Toast.makeText(getActivity(), stepId, Toast.LENGTH_SHORT).show();
     }
 }

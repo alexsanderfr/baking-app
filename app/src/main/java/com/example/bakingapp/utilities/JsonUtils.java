@@ -72,4 +72,79 @@ public class JsonUtils {
 
         return recipeStepsArrayList.toArray(new String[0]);
     }
+
+    public static String getStepDescriptionFromJson(String jsonString, String recipeIdInJson,
+                                                    String stepIdInJson) throws JSONException {
+        final String OWM_ID = "id";
+        final String OWM_STEPS = "steps";
+        final String OWM_DESCRIPTION = "description";
+
+        JSONArray recipesJsonArray = new JSONArray(jsonString);
+
+        for (int i = 0; i < recipesJsonArray.length(); i++) {
+            JSONObject recipeJsonObject = recipesJsonArray.getJSONObject(i);
+            String objectRecipeId = recipeJsonObject.getString(OWM_ID);
+            if (objectRecipeId.equals(recipeIdInJson)) {
+                JSONArray stepsJsonArray = recipeJsonObject.getJSONArray(OWM_STEPS);
+                for (int j = 0; j < stepsJsonArray.length(); j++) {
+                    JSONObject stepJsonObject = stepsJsonArray.getJSONObject(j);
+                    String objectStepId = stepJsonObject.getString(OWM_ID);
+                    if (objectStepId.equals(stepIdInJson)) {
+                        return stepJsonObject.getString(OWM_DESCRIPTION);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public static String getVideoUrlFromJson(String jsonString, String recipeIdInJson, String stepIdInJson)
+            throws JSONException {
+        final String OWM_ID = "id";
+        final String OWM_STEPS = "steps";
+        final String OWM_VIDEO_URL = "videoURL";
+
+        JSONArray recipesJsonArray = new JSONArray(jsonString);
+
+        for (int i = 0; i < recipesJsonArray.length(); i++) {
+            JSONObject recipeJsonObject = recipesJsonArray.getJSONObject(i);
+            String objectRecipeId = recipeJsonObject.getString(OWM_ID);
+            if (objectRecipeId.equals(recipeIdInJson)) {
+                JSONArray stepsJsonArray = recipeJsonObject.getJSONArray(OWM_STEPS);
+                for (int j = 0; j < stepsJsonArray.length(); j++) {
+                    JSONObject stepJsonObject = stepsJsonArray.getJSONObject(j);
+                    String objectStepId = stepJsonObject.getString(OWM_ID);
+                    if (objectStepId.equals(stepIdInJson)) {
+                        return stepJsonObject.getString(OWM_VIDEO_URL);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public static String getThumbnailUrlFromJson(String jsonString, String recipeIdInJson, String stepIdInJson)
+            throws JSONException {
+        final String OWM_ID = "id";
+        final String OWM_STEPS = "steps";
+        final String OWM_THUMBNAIL_URL = "thumbnailURL";
+
+        JSONArray recipesJsonArray = new JSONArray(jsonString);
+
+        for (int i = 0; i < recipesJsonArray.length(); i++) {
+            JSONObject recipeJsonObject = recipesJsonArray.getJSONObject(i);
+            String objectRecipeId = recipeJsonObject.getString(OWM_ID);
+            if (objectRecipeId.equals(recipeIdInJson)) {
+                JSONArray stepsJsonArray = recipeJsonObject.getJSONArray(OWM_STEPS);
+                for (int j = 0; j < stepsJsonArray.length(); j++) {
+                    JSONObject stepJsonObject = stepsJsonArray.getJSONObject(j);
+                    String objectStepId = stepJsonObject.getString(OWM_ID);
+                    if (objectStepId.equals(stepIdInJson)) {
+                        return stepJsonObject.getString(OWM_THUMBNAIL_URL);
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }
