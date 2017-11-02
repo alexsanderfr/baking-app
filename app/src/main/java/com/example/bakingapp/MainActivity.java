@@ -14,7 +14,7 @@ import org.json.JSONException;
 
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements RecipesAdapter.RecipesAdapterOnClickHandler{
+public class MainActivity extends AppCompatActivity implements RecipesAdapter.RecipesAdapterOnClickHandler {
 
     ActivityMainBinding binding;
     RecyclerView.LayoutManager layoutManager;
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);

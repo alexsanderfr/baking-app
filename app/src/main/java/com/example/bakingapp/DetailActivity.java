@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import com.example.bakingapp.databinding.ActivityDetailBinding;
 
@@ -40,5 +41,12 @@ public class DetailActivity extends FragmentActivity implements RecipeStepsAdapt
         stepDetailFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.recipe_steps_fragment_container, stepDetailFragment)
                 .addToBackStack(null).commit();
+    }
+
+
+    public void onClickPreviousButton(View view) {
+    }
+
+    public void onClickNextButton(View view) {
     }
 }

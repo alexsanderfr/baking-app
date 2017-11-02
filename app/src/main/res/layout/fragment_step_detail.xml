@@ -9,11 +9,11 @@
         android:orientation="vertical"
         tools:context="com.example.bakingapp.StepDetailFragment">
 
-
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:visibility="gone"
             android:id="@+id/player_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"/>
 
 
         <TextView
@@ -34,6 +34,7 @@
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onClickPreviousButton"
                 android:text="@string/previous_step_button" />
 
             <Button
@@ -41,6 +42,7 @@
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onClickNextButton"
                 android:text="@string/next_step_button" />
 
         </LinearLayout>
