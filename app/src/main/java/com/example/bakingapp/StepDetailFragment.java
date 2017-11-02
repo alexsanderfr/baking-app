@@ -28,8 +28,6 @@ import com.google.android.exoplayer2.util.Util;
 
 import org.json.JSONException;
 
-import timber.log.Timber;
-
 public class StepDetailFragment extends Fragment {
 
     FragmentStepDetailBinding binding;
@@ -47,8 +45,15 @@ public class StepDetailFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_step_detail, container,
                 false);
 
-        recipeId = getArguments().getString("recipeId");
-        stepId = getArguments().getString("stepId");
+        if (savedInstanceState != null) {
+            recipeId = savedInstanceState.getString("recipeId");
+            stepId = savedInstanceState.getString("stepId");
+        } else {
+            recipeId = getArguments().getString("recipeId");
+            stepId = getArguments().getString("stepId");
+
+        }
+
         String stepDescription = null;
         String videoUrl = null;
         String thumbnailUrl = null;
@@ -68,14 +73,12 @@ public class StepDetailFragment extends Fragment {
             mediaUrl = videoUrl;
         }
 
-        Timber.d("URL: " + mediaUrl);
         initializePlayer();
 
         binding.stepInstructionTv.setText(stepDescription);
 
         return binding.getRoot();
     }
-
 
 
     private void initializePlayer() {
@@ -114,23 +117,20 @@ public class StepDetailFragment extends Fragment {
         }
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        initializePlayer();
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        initializePlayer();
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         releasePlayer();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("recipeId", getArguments().getString("recipeId"));
+        outState.putString("stepId", getArguments().getString("stepId"));
+        if (exoPlayer!= null){
+            playbackPosition = exoPlayer.getCurrentPosition();
+            currentWindow = exoPlayer.getCurrentWindowIndex();
+        }
     }
 }
