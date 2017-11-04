@@ -73,11 +73,14 @@ public class StepDetailFragment extends Fragment {
             mediaUrl = videoUrl;
         }
 
-        initializePlayer();
-
         binding.stepInstructionTv.setText(stepDescription);
-
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        initializePlayer();
     }
 
 
@@ -118,8 +121,8 @@ public class StepDetailFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
         releasePlayer();
     }
 

@@ -14,6 +14,7 @@ import com.example.bakingapp.databinding.ActivityDetailBinding;
 public class DetailActivity extends FragmentActivity implements RecipeStepsAdapter.RecipeStepsAdapterOnClickHandler {
 
     ActivityDetailBinding binding;
+    boolean isDualPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +23,33 @@ public class DetailActivity extends FragmentActivity implements RecipeStepsAdapt
         Intent intent = getIntent();
         FragmentManager fragmentManager = getSupportFragmentManager();
 
+        isDualPane = binding.dividerView != null && binding.dividerView.getVisibility() == View.VISIBLE;
+
         if (savedInstanceState != null) {
-            Fragment fragment = fragmentManager.getFragment(savedInstanceState, "fragment");
-            fragmentManager.beginTransaction().replace(R.id.recipe_steps_fragment_container, fragment)
-                    .commit();
+            if (isDualPane) {
+                Fragment fragmentLeft = fragmentManager.getFragment(savedInstanceState, "leftFragment");
+                Fragment fragmentRight = fragmentManager.getFragment(savedInstanceState, "rightFragment");
+                if (fragmentLeft != null) fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_left, fragmentLeft).commit();
+                if (fragmentRight != null) fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_right, fragmentRight).commit();
+
+            } else {
+                Fragment fragment = fragmentManager.getFragment(savedInstanceState, "fragment");
+                if (fragment != null) fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_detail, fragment).commit();
+            }
+
         } else {
             RecipeStepsFragment recipeStepsFragment = new RecipeStepsFragment();
             recipeStepsFragment.setArguments(intent.getExtras());
-            fragmentManager.beginTransaction().add(R.id.recipe_steps_fragment_container, recipeStepsFragment)
-                    .commit();
+            if (isDualPane) {
+                fragmentManager.beginTransaction().add(R.id.fragment_container_left, recipeStepsFragment)
+                        .commit();
+            } else {
+                fragmentManager.beginTransaction().add(R.id.fragment_container_detail, recipeStepsFragment)
+                        .commit();
+            }
         }
     }
 
@@ -48,15 +67,29 @@ public class DetailActivity extends FragmentActivity implements RecipeStepsAdapt
         bundle.putString("json", intent.getStringExtra("json"));
 
         stepDetailFragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(R.id.recipe_steps_fragment_container, stepDetailFragment)
-                .addToBackStack(null).commit();
+        if (isDualPane) {
+            fragmentManager.beginTransaction().replace(R.id.fragment_container_right, stepDetailFragment)
+                    .addToBackStack(null).commit();
+        } else {
+            fragmentManager.beginTransaction().replace(R.id.fragment_container_detail, stepDetailFragment)
+                    .addToBackStack(null).commit();
+        }
+
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        getSupportFragmentManager().putFragment(outState, "fragment",
-                getSupportFragmentManager().findFragmentById(R.id.recipe_steps_fragment_container));
+        FragmentManager manager = getSupportFragmentManager();
+        if (isDualPane) {
+            manager.putFragment(outState, "leftFragment",
+                    manager.findFragmentById(R.id.fragment_container_left));
+            manager.putFragment(outState, "rightFragment",
+                    manager.findFragmentById(R.id.fragment_container_right));
+        } else {
+            manager.putFragment(outState, "fragment",
+                    manager.findFragmentById(R.id.fragment_container_detail));
+        }
     }
 
 
