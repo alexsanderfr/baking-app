@@ -39,6 +39,10 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         return mRecipesArray.length;
     }
 
+    public void swapRecipes(String[] newData){
+        mRecipesArray = newData;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView recipeNameTextView;
 

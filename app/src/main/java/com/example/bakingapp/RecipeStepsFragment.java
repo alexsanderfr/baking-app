@@ -37,7 +37,7 @@ public class RecipeStepsFragment extends Fragment{
         String[] data = null;
 
         try {
-            String jsonString = JsonUtils.getJsonFromAssets(getActivity());
+            String jsonString = getArguments().getString("json");
             data = JsonUtils.getRecipeStepsFromJson(jsonString, idInJson);
         } catch (JSONException e) {
             e.printStackTrace();
