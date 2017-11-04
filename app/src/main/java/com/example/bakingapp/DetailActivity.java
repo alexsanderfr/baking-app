@@ -64,7 +64,6 @@ public class DetailActivity extends FragmentActivity implements RecipeStepsAdapt
         Bundle bundle = new Bundle();
         bundle.putString("stepId", stepId);
         bundle.putString("recipeId", recipeId);
-        bundle.putString("json", intent.getStringExtra("json"));
 
         stepDetailFragment.setArguments(bundle);
         if (isDualPane) {

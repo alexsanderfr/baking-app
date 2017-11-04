@@ -1,5 +1,7 @@
 package com.example.bakingapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -59,10 +61,14 @@ public class StepDetailFragment extends Fragment {
         String thumbnailUrl = null;
 
         try {
-            String jsonString = getArguments().getString("json");
-            stepDescription = JsonUtils.getStepDescriptionFromJson(jsonString, recipeId, stepId);
-            videoUrl = JsonUtils.getVideoUrlFromJson(jsonString, recipeId, stepId);
-            thumbnailUrl = JsonUtils.getThumbnailUrlFromJson(jsonString, recipeId, stepId);
+            SharedPreferences sharedPref = getActivity().getSharedPreferences(
+                    getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            String jsonString = JsonUtils.getJsonFromAssets(getActivity());
+            if (jsonString!= null) {
+                stepDescription = JsonUtils.getStepDescriptionFromJson(jsonString, recipeId, stepId);
+                videoUrl = JsonUtils.getVideoUrlFromJson(jsonString, recipeId, stepId);
+                thumbnailUrl = JsonUtils.getThumbnailUrlFromJson(jsonString, recipeId, stepId);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

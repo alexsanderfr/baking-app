@@ -1,7 +1,9 @@
 package com.example.bakingapp;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +17,8 @@ import com.example.bakingapp.databinding.FragmentRecipeStepsBinding;
 import com.example.bakingapp.utilities.JsonUtils;
 
 import org.json.JSONException;
+
+import timber.log.Timber;
 
 public class RecipeStepsFragment extends Fragment{
 
@@ -37,8 +41,13 @@ public class RecipeStepsFragment extends Fragment{
         String[] data = null;
 
         try {
-            String jsonString = getArguments().getString("json");
-            data = JsonUtils.getRecipeStepsFromJson(jsonString, idInJson);
+            SharedPreferences sharedPref = getActivity().getSharedPreferences(
+                    getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            String jsonString = JsonUtils.getJsonFromAssets(getActivity());
+            Timber.d(jsonString);
+            if (jsonString != null) {
+                data = JsonUtils.getRecipeStepsFromJson(jsonString, idInJson);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

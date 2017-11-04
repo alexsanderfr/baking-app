@@ -8,22 +8,12 @@
         android:scrollbars="vertical"
         tools:context="com.example.bakingapp.MainActivity">
 
-        <ProgressBar
-            android:id="@+id/recipes_pb"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:foregroundGravity="center"
-            android:visibility="visible" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recipes_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="16dp"
-            android:visibility="gone" />
+            android:layout_margin="16dp" />
 
     </FrameLayout>
 </layout>
