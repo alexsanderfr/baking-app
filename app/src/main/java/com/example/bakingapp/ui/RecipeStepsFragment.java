@@ -1,9 +1,7 @@
-package com.example.bakingapp;
+package com.example.bakingapp.ui;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bakingapp.R;
+import com.example.bakingapp.adapter.RecipeStepsAdapter;
 import com.example.bakingapp.databinding.FragmentRecipeStepsBinding;
 import com.example.bakingapp.utilities.JsonUtils;
 
@@ -22,8 +22,7 @@ import timber.log.Timber;
 
 public class RecipeStepsFragment extends Fragment{
 
-    FragmentRecipeStepsBinding binding;
-    RecyclerView.LayoutManager layoutManager;
+    private FragmentRecipeStepsBinding binding;
 
     public RecipeStepsFragment() {
     }
@@ -36,13 +35,11 @@ public class RecipeStepsFragment extends Fragment{
         String idInJson = getArguments().getString(Intent.EXTRA_TEXT);
 
         binding.recipeStepsRv.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.recipeStepsRv.setLayoutManager(layoutManager);
         String[] data = null;
 
         try {
-            SharedPreferences sharedPref = getActivity().getSharedPreferences(
-                    getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             String jsonString = JsonUtils.getJsonFromAssets(getActivity());
             Timber.d(jsonString);
             if (jsonString != null) {

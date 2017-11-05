@@ -7,7 +7,7 @@
         android:layout_margin="8dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        tools:context="com.example.bakingapp.StepDetailFragment">
+        tools:context="com.example.bakingapp.ui.StepDetailFragment">
 
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/player_view"
@@ -18,36 +18,10 @@
 
         <TextView
             android:id="@+id/step_instruction_tv"
+            android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/previous_step_button"
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClickPreviousButton"
-                android:text="@string/previous_step_button" />
-
-            <Button
-                android:id="@+id/next_step_button"
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClickNextButton"
-                android:text="@string/next_step_button" />
-
-        </LinearLayout>
+            android:layout_weight="4" />
 
     </LinearLayout>
 </layout>

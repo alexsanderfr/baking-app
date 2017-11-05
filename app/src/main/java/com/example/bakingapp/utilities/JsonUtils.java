@@ -1,10 +1,7 @@
 package com.example.bakingapp.utilities;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-
-import com.example.bakingapp.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,9 +14,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class JsonUtils {
-
-    public final static String url =
-            "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
     public static String getJsonFromAssets(Context context) {
         try {
@@ -38,14 +32,6 @@ public class JsonUtils {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static void writeJsonToSharedPrefs(String json, Context context) {
-        SharedPreferences sharedPref = context.getSharedPreferences(
-                context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("json", json);
-        editor.commit();
     }
 
     public static String[] getRecipeNamesFromJson(String jsonString) throws JSONException {
@@ -162,5 +148,34 @@ public class JsonUtils {
             }
         }
         return null;
+    }
+
+    public static String[] getIngredientsFromJson(String idInJson, String jsonString) throws JSONException {
+        final String OWM_ID = "id";
+        final String OWM_INGREDIENTS = "ingredients";
+        final String OWM_INGREDIENT = "ingredient";
+        final String OWM_QUANTITY = "quantity";
+        final String OWM_MEASURE = "measure";
+
+        JSONArray recipesJsonArray = new JSONArray(jsonString);
+        ArrayList<String> ingredientsArrayList = new ArrayList<>();
+
+        for (int i = 0; i < recipesJsonArray.length(); i++) {
+            JSONObject recipeJsonObject = recipesJsonArray.getJSONObject(i);
+            String id = recipeJsonObject.getString(OWM_ID);
+            if (idInJson.equals(id)) {
+                JSONArray ingredientsJsonArray = recipeJsonObject.getJSONArray(OWM_INGREDIENTS);
+                for (int j = 0; j < ingredientsJsonArray.length(); j++) {
+                    JSONObject ingredientJsonObject = ingredientsJsonArray.getJSONObject(j);
+                    String quantity = ingredientJsonObject.getString(OWM_QUANTITY);
+                    String measure = ingredientJsonObject.getString(OWM_MEASURE);
+                    String ingredient = ingredientJsonObject.getString(OWM_INGREDIENT);
+                    String formattedIngredient = String.format("%s %s, %s", quantity, measure, ingredient);
+                    ingredientsArrayList.add(formattedIngredient);
+                }
+            }
+        }
+
+        return ingredientsArrayList.toArray(new String[0]);
     }
 }

@@ -1,7 +1,5 @@
-package com.example.bakingapp;
+package com.example.bakingapp.ui;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bakingapp.R;
 import com.example.bakingapp.databinding.FragmentStepDetailBinding;
 import com.example.bakingapp.utilities.JsonUtils;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -32,13 +31,11 @@ import org.json.JSONException;
 
 public class StepDetailFragment extends Fragment {
 
-    FragmentStepDetailBinding binding;
+    private FragmentStepDetailBinding binding;
     private SimpleExoPlayer exoPlayer;
     private String mediaUrl;
     private long playbackPosition = 0;
     private int currentWindow = 0;
-    String recipeId;
-    String stepId;
 
 
     @Override
@@ -47,6 +44,8 @@ public class StepDetailFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_step_detail, container,
                 false);
 
+        String recipeId;
+        String stepId;
         if (savedInstanceState != null) {
             recipeId = savedInstanceState.getString("recipeId");
             stepId = savedInstanceState.getString("stepId");
@@ -61,8 +60,6 @@ public class StepDetailFragment extends Fragment {
         String thumbnailUrl = null;
 
         try {
-            SharedPreferences sharedPref = getActivity().getSharedPreferences(
-                    getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             String jsonString = JsonUtils.getJsonFromAssets(getActivity());
             if (jsonString!= null) {
                 stepDescription = JsonUtils.getStepDescriptionFromJson(jsonString, recipeId, stepId);

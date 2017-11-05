@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.ui;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.example.bakingapp.BuildConfig;
+import com.example.bakingapp.R;
+import com.example.bakingapp.adapter.RecipesAdapter;
 import com.example.bakingapp.databinding.ActivityMainBinding;
 import com.example.bakingapp.utilities.JsonUtils;
 
@@ -16,9 +19,7 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements RecipesAdapter.RecipesAdapterOnClickHandler {
 
-    ActivityMainBinding binding;
-    RecyclerView.LayoutManager layoutManager;
-    RecipesAdapter recipesAdapter;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.recipesRv.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.recipesRv.setLayoutManager(layoutManager);
 
         String json = JsonUtils.getJsonFromAssets(this);
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        recipesAdapter = new RecipesAdapter(data, MainActivity.this);
+        RecipesAdapter recipesAdapter = new RecipesAdapter(data, MainActivity.this);
         binding.recipesRv.setAdapter(recipesAdapter);
 
     }

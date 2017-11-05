@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.ui;
 
 
 import android.content.Intent;
@@ -9,12 +9,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.example.bakingapp.R;
+import com.example.bakingapp.adapter.RecipeStepsAdapter;
 import com.example.bakingapp.databinding.ActivityDetailBinding;
 
 public class DetailActivity extends FragmentActivity implements RecipeStepsAdapter.RecipeStepsAdapterOnClickHandler {
 
-    ActivityDetailBinding binding;
-    boolean isDualPane;
+    private ActivityDetailBinding binding;
+    private boolean isDualPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +91,5 @@ public class DetailActivity extends FragmentActivity implements RecipeStepsAdapt
             manager.putFragment(outState, "fragment",
                     manager.findFragmentById(R.id.fragment_container_detail));
         }
-    }
-
-
-    public void onClickPreviousButton(View view) {
-    }
-
-    public void onClickNextButton(View view) {
     }
 }

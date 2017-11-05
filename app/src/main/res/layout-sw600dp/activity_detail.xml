@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:foregroundGravity="center"
             android:scrollbars="vertical"
-            tools:context="com.example.bakingapp.DetailActivity" />
+            tools:context="com.example.bakingapp.ui.DetailActivity" />
 
         <View
             android:id="@+id/divider_view"
@@ -29,6 +29,6 @@
             android:layout_height="match_parent"
             android:foregroundGravity="center"
             android:scrollbars="vertical"
-            tools:context="com.example.bakingapp.DetailActivity" />
+            tools:context="com.example.bakingapp.ui.DetailActivity" />
     </LinearLayout>
 </layout>

@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.bakingapp.R;
+
 public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.ViewHolder>{
     private String[] mRecipeStepsArray;
-    public RecipeStepsAdapterOnClickHandler mClickHandler;
+    private RecipeStepsAdapterOnClickHandler mClickHandler;
 
     public interface RecipeStepsAdapterOnClickHandler {
         void onClick(String stepId);
@@ -37,8 +39,8 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         return mRecipeStepsArray.length;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView recipeStepNameTextView;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        public TextView recipeStepNameTextView;
 
         ViewHolder(View itemView) {
             super(itemView);

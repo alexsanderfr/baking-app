@@ -1,10 +1,12 @@
-package com.example.bakingapp;
+package com.example.bakingapp.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.bakingapp.R;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
     private String[] mRecipesArray;
@@ -37,10 +39,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     public int getItemCount() {
         if (mRecipesArray == null) return 0;
         return mRecipesArray.length;
-    }
-
-    public void swapRecipes(String[] newData){
-        mRecipesArray = newData;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
