@@ -178,4 +178,21 @@ public class JsonUtils {
 
         return ingredientsArrayList.toArray(new String[0]);
     }
+
+    public static String getRecipeNameWithIdFromJson(String recipeId, String jsonString)
+            throws JSONException {
+        final String OWM_NAME = "name";
+        final String OWM_ID = "id";
+
+        JSONArray recipesJsonArray = new JSONArray(jsonString);
+
+        for (int i = 0; i < recipesJsonArray.length(); i++) {
+            JSONObject recipeJsonObject = recipesJsonArray.getJSONObject(i);
+            String id = recipeJsonObject.getString(OWM_ID);
+            if (id.equals(recipeId)){
+                return recipeJsonObject.getString(OWM_NAME);
+            }
+        }
+        return null;
+    }
 }

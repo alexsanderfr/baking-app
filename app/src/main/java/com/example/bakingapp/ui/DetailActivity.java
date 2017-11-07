@@ -4,14 +4,15 @@ package com.example.bakingapp.ui;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.bakingapp.R;
 import com.example.bakingapp.adapter.RecipeStepsAdapter;
@@ -27,16 +28,22 @@ public class DetailActivity extends AppCompatActivity implements RecipeStepsAdap
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ActionBar actionBar = getActionBar();
         if (actionBar!= null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-        Intent intent = getIntent();
-        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        isDualPane = binding.dividerView != null && binding.dividerView.getVisibility() == View.VISIBLE;
+        Intent intent = getIntent();
+        String recipeId = intent.getStringExtra("recipeId");
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("recipeId", recipeId);
+        editor.apply();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        isDualPane = getResources().getBoolean(R.bool.isTablet);
 
         if (savedInstanceState != null) {
             if (isDualPane) {
@@ -72,7 +79,7 @@ public class DetailActivity extends AppCompatActivity implements RecipeStepsAdap
         StepDetailFragment stepDetailFragment = new StepDetailFragment();
 
         Intent intent = getIntent();
-        String recipeId = intent.getStringExtra(Intent.EXTRA_TEXT);
+        String recipeId = intent.getStringExtra("recipeId");
 
         Bundle bundle = new Bundle();
         bundle.putString("stepId", stepId);

@@ -1,7 +1,6 @@
 package com.example.bakingapp.ui;
 
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,7 +31,7 @@ public class RecipeStepsFragment extends Fragment{
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recipe_steps,
                 container, false);
-        String idInJson = getArguments().getString(Intent.EXTRA_TEXT);
+        String idInJson = getArguments().getString("recipeId");
 
         binding.recipeStepsRv.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());

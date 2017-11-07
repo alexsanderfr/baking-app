@@ -12,11 +12,12 @@ class IngredientRemoteViewsFactory implements RemoteViewsService.RemoteViewsFact
     private Context mContext;
     private String[] mData;
 
-    IngredientRemoteViewsFactory(Context context, Intent intent, String[] data) {
+    IngredientRemoteViewsFactory(Context context, Intent intent, String[] ingredients) {
         mContext = context;
         int mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
-        mData = data;
+
+        mData = ingredients;
     }
 
     @Override

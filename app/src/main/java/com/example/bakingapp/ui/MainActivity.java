@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     @Override
     public void onClick(String idInJson) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(Intent.EXTRA_TEXT, idInJson);
+        intent.putExtra("recipeId", idInJson);
         startActivity(intent);
     }
 }

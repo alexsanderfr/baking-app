@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/recipe_name_widget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="@string/desired_recipe_widget"
         android:textColor="@android:color/primary_text_dark"
         android:textSize="22sp" />
 
