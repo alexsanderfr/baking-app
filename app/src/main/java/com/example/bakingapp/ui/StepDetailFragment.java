@@ -64,7 +64,7 @@ public class StepDetailFragment extends Fragment {
         String thumbnailUrl = null;
 
         try {
-            String jsonString = JsonUtils.getJsonFromAssets(getActivity());
+            String jsonString = JsonUtils.getJsonFromSharedPref(getActivity());
             if (jsonString!= null) {
                 stepDescription = JsonUtils.getStepDescriptionFromJson(jsonString, recipeId, stepId);
                 videoUrl = JsonUtils.getVideoUrlFromJson(jsonString, recipeId, stepId);

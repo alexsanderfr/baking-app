@@ -39,7 +39,7 @@ public class RecipeStepsFragment extends Fragment{
         String[] data = null;
 
         try {
-            String jsonString = JsonUtils.getJsonFromAssets(getActivity());
+            String jsonString = JsonUtils.getJsonFromSharedPref(getActivity());
             Timber.d(jsonString);
             if (jsonString != null) {
                 data = JsonUtils.getRecipeStepsFromJson(jsonString, idInJson);
