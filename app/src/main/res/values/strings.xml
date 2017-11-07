@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Baking App</string>
     <string name="connectivity_error">An error occurred, maybe you should check your internet connectivity?</string>
-    <string name="ingredients_widget_text">Ingredients</string>
+    <string name="ingredients_text">Ingredients</string>
     <string name="default_recipe_id">1</string>
     <string name="default_recipe_name">Nutella Pie</string>
 </resources>

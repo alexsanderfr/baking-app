@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.bakingapp.R;
 import com.example.bakingapp.adapter.RecipeStepsAdapter;
@@ -20,7 +21,8 @@ import com.example.bakingapp.databinding.ActivityDetailBinding;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class DetailActivity extends AppCompatActivity implements RecipeStepsAdapter.RecipeStepsAdapterOnClickHandler {
+public class DetailActivity extends AppCompatActivity
+        implements RecipeStepsAdapter.RecipeStepsAdapterOnClickHandler {
 
     private ActivityDetailBinding binding;
     private boolean isDualPane;
@@ -64,11 +66,11 @@ public class DetailActivity extends AppCompatActivity implements RecipeStepsAdap
             RecipeStepsFragment recipeStepsFragment = new RecipeStepsFragment();
             recipeStepsFragment.setArguments(intent.getExtras());
             if (isDualPane) {
-                fragmentManager.beginTransaction().add(R.id.fragment_container_left, recipeStepsFragment)
-                        .commit();
+                fragmentManager.beginTransaction().add(R.id.fragment_container_left,
+                        recipeStepsFragment).commit();
             } else {
-                fragmentManager.beginTransaction().add(R.id.fragment_container_detail, recipeStepsFragment)
-                        .commit();
+                fragmentManager.beginTransaction().add(R.id.fragment_container_detail,
+                        recipeStepsFragment).commit();
             }
         }
     }
@@ -87,11 +89,11 @@ public class DetailActivity extends AppCompatActivity implements RecipeStepsAdap
 
         stepDetailFragment.setArguments(bundle);
         if (isDualPane) {
-            fragmentManager.beginTransaction().replace(R.id.fragment_container_right, stepDetailFragment)
-                    .addToBackStack(null).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container_right,
+                    stepDetailFragment).addToBackStack(null).commit();
         } else {
-            fragmentManager.beginTransaction().replace(R.id.fragment_container_detail, stepDetailFragment)
-                    .addToBackStack(null).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container_detail,
+                    stepDetailFragment).addToBackStack(null).commit();
         }
 
     }
@@ -114,7 +116,6 @@ public class DetailActivity extends AppCompatActivity implements RecipeStepsAdap
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 FragmentManager fm = getSupportFragmentManager();
                 if (fm.getBackStackEntryCount() > 0) {
@@ -130,5 +131,25 @@ public class DetailActivity extends AppCompatActivity implements RecipeStepsAdap
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    public void onClickIngredientsButton(View view) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        IngredientsFragment ingredientsFragment = new IngredientsFragment();
+
+        Intent intent = getIntent();
+        String recipeId = intent.getStringExtra("recipeId");
+
+        Bundle bundle = new Bundle();
+        bundle.putString("recipeId", recipeId);
+
+        ingredientsFragment.setArguments(bundle);
+        if (isDualPane) {
+            fragmentManager.beginTransaction().replace(R.id.fragment_container_right,
+                    ingredientsFragment).addToBackStack(null).commit();
+        } else {
+            fragmentManager.beginTransaction().replace(R.id.fragment_container_detail,
+                    ingredientsFragment).addToBackStack(null).commit();
+        }
     }
 }

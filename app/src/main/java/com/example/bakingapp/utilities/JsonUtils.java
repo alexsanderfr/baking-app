@@ -36,7 +36,7 @@ public class JsonUtils {
         return recipeNamesArrayList.toArray(new String[0]);
     }
 
-    public static String[] getRecipeStepsFromJson(String jsonString, String idInJson)
+    public static String[] getRecipeStepsFromJson(String jsonString, String recipeId)
             throws JSONException {
         final String OWM_ID = "id";
         final String OWM_STEPS = "steps";
@@ -48,7 +48,7 @@ public class JsonUtils {
         for (int i = 0; i < recipesJsonArray.length(); i++) {
             JSONObject recipeJsonObject = recipesJsonArray.getJSONObject(i);
             String id = recipeJsonObject.getString(OWM_ID);
-            if (id.equals(idInJson)) {
+            if (id.equals(recipeId)) {
                 JSONArray stepsJsonArray = recipeJsonObject.getJSONArray(OWM_STEPS);
                 for (int j = 0; j < stepsJsonArray.length(); j++) {
                     JSONObject stepJsonObject = stepsJsonArray.getJSONObject(j);
@@ -62,7 +62,7 @@ public class JsonUtils {
         return recipeStepsArrayList.toArray(new String[0]);
     }
 
-    public static String getStepDescriptionFromJson(String jsonString, String recipeIdInJson,
+    public static String getStepDescriptionFromJson(String jsonString, String recipeId,
                                                     String stepIdInJson) throws JSONException {
         final String OWM_ID = "id";
         final String OWM_STEPS = "steps";
@@ -73,7 +73,7 @@ public class JsonUtils {
         for (int i = 0; i < recipesJsonArray.length(); i++) {
             JSONObject recipeJsonObject = recipesJsonArray.getJSONObject(i);
             String objectRecipeId = recipeJsonObject.getString(OWM_ID);
-            if (objectRecipeId.equals(recipeIdInJson)) {
+            if (objectRecipeId.equals(recipeId)) {
                 JSONArray stepsJsonArray = recipeJsonObject.getJSONArray(OWM_STEPS);
                 for (int j = 0; j < stepsJsonArray.length(); j++) {
                     JSONObject stepJsonObject = stepsJsonArray.getJSONObject(j);
@@ -87,7 +87,7 @@ public class JsonUtils {
         return null;
     }
 
-    public static String getVideoUrlFromJson(String jsonString, String recipeIdInJson, String stepIdInJson)
+    public static String getVideoUrlFromJson(String jsonString, String recipeId, String stepIdInJson)
             throws JSONException {
         final String OWM_ID = "id";
         final String OWM_STEPS = "steps";
@@ -98,7 +98,7 @@ public class JsonUtils {
         for (int i = 0; i < recipesJsonArray.length(); i++) {
             JSONObject recipeJsonObject = recipesJsonArray.getJSONObject(i);
             String objectRecipeId = recipeJsonObject.getString(OWM_ID);
-            if (objectRecipeId.equals(recipeIdInJson)) {
+            if (objectRecipeId.equals(recipeId)) {
                 JSONArray stepsJsonArray = recipeJsonObject.getJSONArray(OWM_STEPS);
                 for (int j = 0; j < stepsJsonArray.length(); j++) {
                     JSONObject stepJsonObject = stepsJsonArray.getJSONObject(j);
@@ -112,7 +112,7 @@ public class JsonUtils {
         return null;
     }
 
-    public static String getThumbnailUrlFromJson(String jsonString, String recipeIdInJson, String stepIdInJson)
+    public static String getThumbnailUrlFromJson(String jsonString, String recipeId, String stepIdInJson)
             throws JSONException {
         final String OWM_ID = "id";
         final String OWM_STEPS = "steps";
@@ -123,7 +123,7 @@ public class JsonUtils {
         for (int i = 0; i < recipesJsonArray.length(); i++) {
             JSONObject recipeJsonObject = recipesJsonArray.getJSONObject(i);
             String objectRecipeId = recipeJsonObject.getString(OWM_ID);
-            if (objectRecipeId.equals(recipeIdInJson)) {
+            if (objectRecipeId.equals(recipeId)) {
                 JSONArray stepsJsonArray = recipeJsonObject.getJSONArray(OWM_STEPS);
                 for (int j = 0; j < stepsJsonArray.length(); j++) {
                     JSONObject stepJsonObject = stepsJsonArray.getJSONObject(j);
@@ -137,7 +137,7 @@ public class JsonUtils {
         return null;
     }
 
-    public static String[] getIngredientsFromJson(String idInJson, String jsonString) throws JSONException {
+    public static String[] getIngredientsFromJson(String recipeId, String jsonString) throws JSONException {
         final String OWM_ID = "id";
         final String OWM_INGREDIENTS = "ingredients";
         final String OWM_INGREDIENT = "ingredient";
@@ -150,7 +150,7 @@ public class JsonUtils {
         for (int i = 0; i < recipesJsonArray.length(); i++) {
             JSONObject recipeJsonObject = recipesJsonArray.getJSONObject(i);
             String id = recipeJsonObject.getString(OWM_ID);
-            if (idInJson.equals(id)) {
+            if (recipeId.equals(id)) {
                 JSONArray ingredientsJsonArray = recipeJsonObject.getJSONArray(OWM_INGREDIENTS);
                 for (int j = 0; j < ingredientsJsonArray.length(); j++) {
                     JSONObject ingredientJsonObject = ingredientsJsonArray.getJSONObject(j);

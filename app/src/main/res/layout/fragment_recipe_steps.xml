@@ -1,15 +1,38 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:orientation="vertical"
         tools:context="com.example.bakingapp.ui.RecipeStepsFragment">
+
+        <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:card_view="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/colorAccent"
+            card_view:cardCornerRadius="4dp">
+
+            <TextView
+                android:id="@+id/recipe_step_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="8dp"
+                android:onClick="onClickIngredientsButton"
+                android:text="@string/ingredients_text"
+                android:textColor="@android:color/primary_text_dark"
+                android:textSize="20sp" />
+
+        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recipe_steps_rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp" />
-    </FrameLayout>
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </layout>
