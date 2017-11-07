@@ -1,13 +1,16 @@
 package com.example.bakingapp.ui;
 
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.bakingapp.R;
@@ -16,7 +19,7 @@ import com.example.bakingapp.databinding.ActivityDetailBinding;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class DetailActivity extends FragmentActivity implements RecipeStepsAdapter.RecipeStepsAdapterOnClickHandler {
+public class DetailActivity extends AppCompatActivity implements RecipeStepsAdapter.RecipeStepsAdapterOnClickHandler {
 
     private ActivityDetailBinding binding;
     private boolean isDualPane;
@@ -24,6 +27,11 @@ public class DetailActivity extends FragmentActivity implements RecipeStepsAdapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getActionBar();
+        if (actionBar!= null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         Intent intent = getIntent();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -94,6 +102,22 @@ public class DetailActivity extends FragmentActivity implements RecipeStepsAdapt
             manager.putFragment(outState, "fragment",
                     manager.findFragmentById(R.id.fragment_container_detail));
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                FragmentManager fm = getSupportFragmentManager();
+                if (fm.getBackStackEntryCount() > 0) {
+                    fm.popBackStack();
+                } else {
+                    NavUtils.navigateUpFromSameTask(this);
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

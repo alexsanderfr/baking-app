@@ -34,8 +34,8 @@ public class StepDetailFragment extends Fragment {
     private FragmentStepDetailBinding binding;
     private SimpleExoPlayer exoPlayer;
     private String mediaUrl;
-    private long playbackPosition = 0;
-    private int currentWindow = 0;
+    private long playbackPosition;
+    private int currentWindow;
 
 
     @Override
@@ -49,9 +49,13 @@ public class StepDetailFragment extends Fragment {
         if (savedInstanceState != null) {
             recipeId = savedInstanceState.getString("recipeId");
             stepId = savedInstanceState.getString("stepId");
+            playbackPosition = savedInstanceState.getLong("position");
+            currentWindow = savedInstanceState.getInt("window");
         } else {
             recipeId = getArguments().getString("recipeId");
             stepId = getArguments().getString("stepId");
+            playbackPosition = 0;
+            currentWindow = 0;
 
         }
 
@@ -135,8 +139,8 @@ public class StepDetailFragment extends Fragment {
         outState.putString("recipeId", getArguments().getString("recipeId"));
         outState.putString("stepId", getArguments().getString("stepId"));
         if (exoPlayer!= null){
-            playbackPosition = exoPlayer.getCurrentPosition();
-            currentWindow = exoPlayer.getCurrentWindowIndex();
+            outState.putLong("position", exoPlayer.getCurrentPosition());
+            outState.putInt("window", exoPlayer.getCurrentWindowIndex());
         }
     }
 }
