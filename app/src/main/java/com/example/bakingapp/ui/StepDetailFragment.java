@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.bakingapp.R;
 import com.example.bakingapp.databinding.FragmentStepDetailBinding;
 import com.example.bakingapp.utilities.JsonUtils;
@@ -44,6 +45,9 @@ public class StepDetailFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_step_detail, container,
                 false);
 
+        boolean isDualPane = getActivity().getResources().getBoolean(R.bool.isTablet);
+        boolean isLand = getActivity().getResources().getBoolean(R.bool.isLand);
+
         String recipeId;
         String stepId;
         if (savedInstanceState != null) {
@@ -60,12 +64,11 @@ public class StepDetailFragment extends Fragment {
         }
 
         String stepDescription = null;
-        String videoUrl = null;
         String thumbnailUrl = null;
-
+        String videoUrl = null;
         try {
             String jsonString = JsonUtils.getJsonFromSharedPref(getActivity());
-            if (jsonString!= null) {
+            if (jsonString != null) {
                 stepDescription = JsonUtils.getStepDescriptionFromJson(jsonString, recipeId, stepId);
                 videoUrl = JsonUtils.getVideoUrlFromJson(jsonString, recipeId, stepId);
                 thumbnailUrl = JsonUtils.getThumbnailUrlFromJson(jsonString, recipeId, stepId);
@@ -75,17 +78,23 @@ public class StepDetailFragment extends Fragment {
         }
 
         if (thumbnailUrl != null && !thumbnailUrl.equals("")) {
+            if (!(isLand && !isDualPane)) {
+                binding.thumbnailCardView.setVisibility(View.VISIBLE);
+                Glide.with(getActivity()).load(thumbnailUrl).into(binding.thumbnailView);
+            }
             mediaUrl = thumbnailUrl;
         } else if (videoUrl != null && !videoUrl.equals("")) {
             mediaUrl = videoUrl;
         }
 
-        binding.stepInstructionTv.setText(stepDescription);
+        if (!(isLand && !isDualPane)) {
+            binding.stepInstructionTv.setText(stepDescription);
+        }
         return binding.getRoot();
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         initializePlayer();
     }
@@ -138,7 +147,7 @@ public class StepDetailFragment extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putString("recipeId", getArguments().getString("recipeId"));
         outState.putString("stepId", getArguments().getString("stepId"));
-        if (exoPlayer!= null){
+        if (exoPlayer != null) {
             outState.putLong("position", exoPlayer.getCurrentPosition());
             outState.putInt("window", exoPlayer.getCurrentWindowIndex());
         }

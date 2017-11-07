@@ -8,27 +8,32 @@
         android:orientation="horizontal">
 
         <FrameLayout
-            android:layout_weight="1"
             android:id="@+id/fragment_container_left"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:foregroundGravity="center"
             android:scrollbars="vertical"
             tools:context="com.example.bakingapp.ui.DetailActivity" />
 
         <View
             android:id="@+id/divider_view"
-            android:background="@android:color/darker_gray"
             android:layout_width="1dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
 
-        <FrameLayout
-            android:layout_weight="1"
-            android:id="@+id/fragment_container_right"
+        <ScrollView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:foregroundGravity="center"
-            android:scrollbars="vertical"
-            tools:context="com.example.bakingapp.ui.DetailActivity" />
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:id="@+id/fragment_container_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center"
+                android:scrollbars="vertical"
+                tools:context="com.example.bakingapp.ui.DetailActivity" />
+        </ScrollView>
     </LinearLayout>
 </layout>
