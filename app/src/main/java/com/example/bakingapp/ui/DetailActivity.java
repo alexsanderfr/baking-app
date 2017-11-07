@@ -1,6 +1,7 @@
 package com.example.bakingapp.ui;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.view.View;
 import com.example.bakingapp.R;
 import com.example.bakingapp.adapter.RecipeStepsAdapter;
 import com.example.bakingapp.databinding.ActivityDetailBinding;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DetailActivity extends FragmentActivity implements RecipeStepsAdapter.RecipeStepsAdapterOnClickHandler {
 
@@ -91,5 +94,10 @@ public class DetailActivity extends FragmentActivity implements RecipeStepsAdapt
             manager.putFragment(outState, "fragment",
                     manager.findFragmentById(R.id.fragment_container_detail));
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

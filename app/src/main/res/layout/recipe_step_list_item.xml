@@ -12,7 +12,7 @@
     <TextView
         android:id="@+id/recipe_step_name_tv"
         android:textColor="@android:color/primary_text_dark"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

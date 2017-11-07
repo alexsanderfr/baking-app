@@ -1,5 +1,6 @@
 package com.example.bakingapp.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import com.example.bakingapp.utilities.JsonUtils;
 import org.json.JSONException;
 
 import timber.log.Timber;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements RecipesAdapter.RecipesAdapterOnClickHandler {
 
@@ -24,9 +27,17 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Roboto-Light.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.recipesRv.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -43,6 +54,11 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         RecipesAdapter recipesAdapter = new RecipesAdapter(data, MainActivity.this);
         binding.recipesRv.setAdapter(recipesAdapter);
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
