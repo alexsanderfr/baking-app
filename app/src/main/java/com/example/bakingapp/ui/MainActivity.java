@@ -6,13 +6,18 @@ import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.Snackbar;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.bakingapp.BuildConfig;
+import com.example.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.example.bakingapp.R;
 import com.example.bakingapp.adapter.RecipesAdapter;
 import com.example.bakingapp.databinding.ActivityMainBinding;
@@ -31,6 +36,18 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     private ActivityMainBinding binding;
     RecipesAdapter recipesAdapter;
     String[] data = null;
+
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null){
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         recipesAdapter = new RecipesAdapter(data, MainActivity.this);
         binding.recipesRv.setAdapter(recipesAdapter);
 
+        getIdlingResource();
         if (data == null) {
             getJsonFromUrl(JsonUtils.url);
         } else {
@@ -65,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     }
 
     public void getJsonFromUrl(String url) {
+        if (mIdlingResource != null) {
+            mIdlingResource.setIdleState(false);
+        }
         Ion.with(this).load(url).asString().setCallback(new FutureCallback<String>() {
             @Override
             public void onCompleted(Exception e, String result) {
@@ -75,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
                     editor.putString("json", result);
                     editor.apply();
                     updateUi();
+                    if (mIdlingResource != null) {
+                        mIdlingResource.setIdleState(true);
+                    }
                 } else {
                     binding.recipesPb.setVisibility(View.GONE);
                     View view = findViewById(android.R.id.content);
