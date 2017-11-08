@@ -12,9 +12,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.example.bakingapp.R;
 import com.example.bakingapp.adapter.RecipeStepsAdapter;
 import com.example.bakingapp.databinding.ActivityDetailBinding;
@@ -43,6 +45,12 @@ public class DetailActivity extends AppCompatActivity
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("recipeId", recipeId);
         editor.apply();
+
+        String image = intent.getStringExtra("image");
+        if (!TextUtils.isEmpty(image)){
+            binding.recipeImageIv.setVisibility(View.VISIBLE);
+            Glide.with(this).load(image).into(binding.recipeImageIv);
+        }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         isDualPane = getResources().getBoolean(R.bool.isTablet);

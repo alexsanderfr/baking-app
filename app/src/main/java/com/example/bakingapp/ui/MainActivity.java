@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     @VisibleForTesting
     @NonNull
     public IdlingResource getIdlingResource() {
-        if (mIdlingResource == null){
+        if (mIdlingResource == null) {
             mIdlingResource = new SimpleIdlingResource();
         }
         return mIdlingResource;
@@ -83,30 +85,36 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     }
 
     public void getJsonFromUrl(String url) {
-        if (mIdlingResource != null) {
-            mIdlingResource.setIdleState(false);
-        }
-        Ion.with(this).load(url).asString().setCallback(new FutureCallback<String>() {
-            @Override
-            public void onCompleted(Exception e, String result) {
-                if (result != null) {
-                    SharedPreferences sharedPref = PreferenceManager
-                            .getDefaultSharedPreferences(MainActivity.this);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("json", result);
-                    editor.apply();
-                    updateUi();
-                    if (mIdlingResource != null) {
-                        mIdlingResource.setIdleState(true);
-                    }
-                } else {
-                    binding.recipesPb.setVisibility(View.GONE);
-                    View view = findViewById(android.R.id.content);
-                    Snackbar.make(view, getString(R.string.connectivity_error),
-                            Snackbar.LENGTH_LONG).show();
-                }
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        final boolean isOnline = netInfo != null && netInfo.isConnectedOrConnecting();
+        if (isOnline) {
+            if (mIdlingResource != null) {
+                mIdlingResource.setIdleState(false);
             }
-        });
+            Ion.with(this).load(url).asString().setCallback(new FutureCallback<String>() {
+                @Override
+                public void onCompleted(Exception e, String result) {
+                    if (result != null) {
+                        SharedPreferences sharedPref = PreferenceManager
+                                .getDefaultSharedPreferences(MainActivity.this);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("json", result);
+                        editor.apply();
+                        updateUi();
+                        if (mIdlingResource != null) {
+                            mIdlingResource.setIdleState(true);
+                        }
+                    }
+                }
+            });
+        } else {
+            binding.recipesPb.setVisibility(View.GONE);
+            View view = findViewById(android.R.id.content);
+            Snackbar.make(view, getString(R.string.connectivity_error),
+                    Snackbar.LENGTH_LONG).show();
+        }
     }
 
     private void updateUi() {
@@ -138,6 +146,13 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     public void onClick(String idInJson) {
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra("recipeId", idInJson);
+        String json = JsonUtils.getJsonFromSharedPref(this);
+        try {
+            String image = JsonUtils.getImageWithIdFromJson(idInJson, json);
+            intent.putExtra("image", image);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         startActivity(intent);
     }
 }

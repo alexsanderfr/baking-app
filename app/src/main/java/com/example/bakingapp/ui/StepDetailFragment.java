@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,13 +78,13 @@ public class StepDetailFragment extends Fragment {
             e.printStackTrace();
         }
 
-        if (thumbnailUrl != null && !thumbnailUrl.equals("")) {
+        if (!TextUtils.isEmpty(thumbnailUrl)) {
             if (!(isLand && !isDualPane)) {
                 binding.thumbnailCardView.setVisibility(View.VISIBLE);
                 Glide.with(getActivity()).load(thumbnailUrl).into(binding.thumbnailView);
             }
             mediaUrl = thumbnailUrl;
-        } else if (videoUrl != null && !videoUrl.equals("")) {
+        } else if (!TextUtils.isEmpty(videoUrl)) {
             mediaUrl = videoUrl;
         }
 

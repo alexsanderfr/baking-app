@@ -182,4 +182,21 @@ public class JsonUtils {
         }
         return null;
     }
+
+    public static String getImageWithIdFromJson(String recipeId, String jsonString)
+            throws JSONException {
+        final String OWM_IMAGE = "image";
+        final String OWM_ID = "id";
+
+        JSONArray recipesJsonArray = new JSONArray(jsonString);
+
+        for (int i = 0; i < recipesJsonArray.length(); i++) {
+            JSONObject recipeJsonObject = recipesJsonArray.getJSONObject(i);
+            String id = recipeJsonObject.getString(OWM_ID);
+            if (id.equals(recipeId)) {
+                return recipeJsonObject.getString(OWM_IMAGE);
+            }
+        }
+        return null;
+    }
 }
