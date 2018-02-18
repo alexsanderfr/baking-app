@@ -8,7 +8,7 @@ Baking app for Udacity's Android Developer Nanodegree
 
 ![](https://raw.githubusercontent.com/alexsanderfr/baking-app/master/images/2.png)
 
-![](https://raw.githubusercontent.com/alexsanderfr/baking-app/master/images/2.png)
+![](https://raw.githubusercontent.com/alexsanderfr/baking-app/master/images/3.png)
 
 ### Prerequisites
 
