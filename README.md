@@ -1,6 +1,6 @@
 # Baking App
 
-Baking app for Udacity's Android Developer Nanodegree
+Recipes app
 
 ### Screenshots
 
